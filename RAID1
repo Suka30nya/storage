@@ -1,0 +1,47 @@
+ 1  ip a
+    2  ifup ens33
+    3  ip a
+    4  ip a
+    5   yum install pciutils
+    6  yum install mdadm
+    7  df -h
+    8  lsblk
+    9  fdisk /dev/md0
+   10  mdadm --create --verbose /dev/md0 --level=1 --raid-device=2 /dev/sdb /dev/sdc
+   11  fdisk /dev/md0
+   12  fdisk -l
+   13  mkfs.ext4 /dev/md0p1
+   14  df -l
+   15  mkdir /mnt/raid1
+   16  mount /dev/md0p1 /mnt/raid1
+   17  df -l
+   18  df -h
+   19  cd /mnt/raid1/
+   20  ls
+   21  vi text.txt
+   22  ls
+   23  halt
+   24  lsblk
+   25  history
+   26  df -l
+   27  mdadm --detail /dev/md0
+   28  lsblk
+   29  mdadm /dev/md0 --add /dev/sdc
+   30  lsblk
+   31  mdadm --detail /dev/md0
+   32  cd /mnt/raid1/
+   33  ls
+   34  cd
+   35  mount /dev/md0p1 /mnt/raid1
+   36  cd /mnt/raid1/
+   37  ls
+   38  cat text.txt
+   39  history
+   40  blkid
+   41  vi /etc/fstab
+   42  df -h
+   43  mdadm --detail /dev/md0
+   44   lsblk
+   45  vi /etc/fstab
+   46  history
+[root@localhost raid1]#
