@@ -1,0 +1,25 @@
+gluster   
+after getting error
+1  lsblk
+    2  mount /dev/sdb1 /mnt/disk1
+    3* ls /mnt/disk1/
+    4  mount /dev/sdb /mnt/disk1
+    5  cd /mnt/disk1
+    6  ls
+    7  mount /dev/sdb /mnt/disk1
+    8  lsblk
+    9  mount /dev/sdb /mnt/disk1
+   10  mount /dev/sdb /mnt/disk2
+   11  mount /dev/sdb /mnt/disk
+   12  df -h
+   13  mkfs.xfs /dev/sdb
+   14  mount /dev/sdb /mnt/disk
+   15  mkdir /mnt/disk1/diskvol/
+   16  df -h
+   17  gluster pool list
+   18   gluster volume create gdisk4 replica 3 server1.hpcsa.com:/mnt/disk1/diskvol/gdisk4  server2.hpcsa.com:/mnt/disk1/diskvol/gdisk4  server3.hpcsa.com:/mnt/disk1/diskvol/gdisk4 force
+   19  gluster volume start gdisk4
+   20  cd diskvol/gdisk4
+   21  ls
+   22  du -sh file1.data
+   23  history
