@@ -1,3 +1,5 @@
+centos7 (1hdd(20GB)+1external hdd(20GB)) (3 servers)
+
 gluster   
 after getting error
 1  lsblk
@@ -23,3 +25,23 @@ after getting error
    21  ls
    22  du -sh file1.data
    23  history
+
+
+
+
+
+on client
+
+  1  vi /etc/hosts
+    2  hostname
+    3  df -h
+    4  yum install glusterfs-fuse
+    5  mkdir /mnt/gdrive
+    6     mount -t glusterfs server1.hpcsa.com:/gdisk4 /mnt/gdrive
+    7  cd /mnt/gdrive/
+    8  ls
+    9  df -h
+   10  dd if=/dev/zero of=file1.data bs=1024 count=204600
+   11  history
+
+
