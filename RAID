@@ -1,0 +1,184 @@
+STORAGE AND BACKUP MANAGEMENT
+`````````````````````````````
+
+Physial storage
+	- single disk drive
+		it is local
+		easy to use
+		physical secure
+		affordable
+		portable
+		mobile, laptop
+	- JBOD -  
+		it is connect to the SCSI/ESATA
+	- Volume - 
+	- storage array - 
+	- DAS - direct attack storage
+	
+	
+RAID 
+	
+	
+	
+	
+Practical
+`````````
+
+vm-ware
+
+1 machine - 
+iso - centos
+3 hdd -	20gb
+		20gb
+		20gb 
+ram	-	1gb
+network - Nat
+
+
+#dhpclient
+#ip a
+#lsblk
+	- it show the all hdd in the machine.
+#yum install pciutils -y
+#lspci
+	00:10.0 SCSI storage controller: Broadcom / LSI 53c1030 PCI-X Fusion-MPT Dual Ultra320 SCSI (rev 01)
+
+#yum install mdadm -y
+	- it is a package to create raid array.
+
+# mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc
+	mdadm: chunk size defaults to 512K
+	mdadm: Defaulting to version 1.2 metadata
+	mdadm: array /dev/md0 started.
+
+# df -l
+# fdisk /dev/md0
+	Command (m for help: n
+	Select (default p) : p
+	press enter
+	press enter
+	press enter
+	Command (m for help): w
+		The partition table has been altered!
+		
+#fdisk -l
+# mkfs.ext4 /dev/md0p1
+# mkdir /mnt/raid0
+# mount /dev/md0p1 /mnt/raid0/
+# df -h
+# lsblk
+		NAME            MAJ:MIN RM SIZE RO TYPE  MOUNTPOINT
+		sda               8:0    0  20G  0 disk
+		├─sda1            8:1    0   1G  0 part  /boot
+		└─sda2            8:2    0  19G  0 part
+			├─centos-root 253:0    0  17G  0 lvm   /
+			└─centos-swap 253:1    0   2G  0 lvm   [SWAP]
+		sdb               8:16   0  40G  0 disk
+		└─md0             9:0    0  60G  0 raid0
+			└─md0p1       259:1    0  60G  0 md    /mnt/raid0
+		sdc               8:32   0  20G  0 disk
+		└─md0             9:0    0  60G  0 raid0
+			└─md0p1       259:1    0  60G  0 md    /mnt/raid0
+	
+	
+	
+	
+RAID 1
+``````
+Again make 1 more vm machine 
+
+1 machine - 
+iso - centos
+3 hdd -	20gb
+		20gb
+		20gb 
+ram	-	1gb
+network - Nat
+
+
+
+#dhpclient
+#ip a
+#lsblk
+	- it show the all hdd in the machine.
+#yum install pciutils -y
+#lspci
+	00:10.0 SCSI storage controller: Broadcom / LSI 53c1030 PCI-X Fusion-MPT Dual Ultra320 SCSI (rev 01)
+
+#yum install mdadm -y
+	- it is a package to create raid array.
+
+# mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdb /dev/sdc
+	mdadm: chunk size defaults to 512K
+	mdadm: Defaulting to version 1.2 metadata
+	mdadm: array /dev/md0 started.
+
+# df -l
+# fdisk /dev/md0
+	Command (m for help: n
+	Select (default p) : p
+	press enter
+	press enter
+	press enter
+	Command (m for help): w
+		The partition table has been altered!
+		
+#fdisk -l
+# mkfs.ext4 /dev/md0p1
+# mkdir /mnt/raid1
+# mount /dev/md0p1 /mnt/raid1/
+# df -h
+# lsblk
+		NAME            MAJ:MIN RM SIZE RO TYPE  MOUNTPOINT
+		sda               8:0    0  20G  0 disk
+		├─sda1            8:1    0   1G  0 part  /boot
+		└─sda2            8:2    0  19G  0 part
+			├─centos-root 253:0    0  17G  0 lvm   /
+			└─centos-swap 253:1    0   2G  0 lvm   [SWAP]
+		sdb               8:16   0  40G  0 disk
+		└─md0             9:0    0  60G  0 raid0
+			└─md0p1       259:1    0  60G  0 md    /mnt/raid1
+		sdc               8:32   0  20G  0 disk
+		└─md0             9:0    0  60G  0 raid0
+			└─md0p1       259:1    0  60G  0 md    /mnt/raid1
+
+
+create 1 file in 
+vi /mnt/raid1/test 
+name and add somedata in it
+remove 1 hdd on vm
+check the file is have or not
+again add 1 hdd 
+and mount it 
+
+
+#lsblk 
+to check the hdd name which is added
+
+# mount /dev/md0p1 /mnt/raid1/
+
+# mdadm /dev/md0 --add /dev/sdb
+	mdadm: added /dev/sdb
+	
+#lsblk
+
+#blkid
+	copy uuid
+	UUID=145a7cb0-32d7-4ee8-a3bc-eaeac375dfd7
+
+# vi /etc/fstab
+	past hereBBLI
+	
+	
+RAID 5
+``````
+
+#mdadm --detail /dev/md0
+#df -h
+#df -l
+#lsblk
+#mdadm /dev/md0 --add /dev/sdf /dev/sdg
+#mdadm --detail /dev/md0
+#mdadm --grow --raid-devices=4 /dev/md0
+#mdadm --detail /dev/md0
+
