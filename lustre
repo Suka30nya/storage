@@ -1,0 +1,111 @@
+master _____________
+
+  1  yum install nano && systemctl stop firewalld && systemctl disable firewalld
+    2  hostname
+    3   hostname beegfs-mgmt-meta-srv-01
+    4  hostname
+    5   hostname luster-mgmt-meta-srv-01
+    6  hostname
+    7  vi /etc/hosts
+    8  vi /etc/selinux/config
+    9  vi /etc/yum.repos.d/lustre.repo
+   10  scp /etc/yum.repos.d/lustre.repo root@192.168.144.199:/etc/yum.repos.d/
+   11  scp /etc/yum.repos.d/lustre.repo root@192.168.144.200:/etc/yum.repos.d/
+   12  scp /etc/yum.repos.d/lustre.repo root@192.168.144.201:/etc/yum.repos.d/
+   13  yum update && yum upgrade -y e2fsprogs
+   14  yum install -y lustre-tests
+   15  ip a
+   16  history
+   17  df -h
+   18  hgitory
+   19  hsitory
+   20  history
+
+oss 1 _______________
+
+  1  yum install nano && systemctl stop firewalld && systemctl disable firewalld
+    2   hostname luster-oss-storage-01
+    3   hostname
+    4  vi /etc/hosts
+    5  vi /etc/selinux/config
+    6  getenforce
+    7  setenforce 0
+    8  getenforce
+    9  yum update && yum upgrade -y e2fsprogs
+   10  yum install -y lustre-tests
+   11  hostname
+   12  sudo su
+   13  ip a
+   14  mkfs.lustre --reformat --ost --fsname=lustrefs --mgsnode=192.168.144.198@tcp --index=1
+   15  lsblk
+   16  mkfs.ext4 /dev/nvme0n2
+   17  mkfs.lustre --reformat --ost --fsname=lustrefs --mgsnode=192.168.144.198@tcp --index=1 /dev/nvme0n2
+   18  mkdir /ostoss_mount0
+   19  ld
+   20  ls
+   21  ls /
+   22  rm -rf /ostoss_mount0/
+   23  mkdir /ostoss_mount
+   24  rm -rf /ostoss_mount
+   25  mkdir /ostoss_mount0
+   26  mount -t lustre /dev/nvme0n2 /ostoss_mount0
+   27  lsblk
+   28  history
+
+
+oss 2__________________
+
+    1  yum install nano && systemctl stop firewalld && systemctl disable firewalld
+    2  hostname luster-oss-storage-02
+    3  hostname
+    4  vi /etc/hosts
+    5  vi /etc/selinux/config
+    6  getenforce
+    7  setenforce 0
+    8  getenforce
+    9  yum update && yum upgrade -y e2fsprogs
+   10  yum install -y lustre-tests
+   11  sudo su
+   12  ip a
+   13  lsblk
+   14  mkfs.ext4 /dev/nvme0n2
+   15  mkfs.lustre --reformat --ost --fsname=lustrefs --mgsnode=192.168.144.198@tcp --index=2 /dev/nvme0n2
+   16  ls /
+   17  mkdir /ostoss_mount0
+   18  mount -t lustre /dev/nvme0n2 /ostoss_mount0
+   19  lsblk
+   20  history
+
+
+client ___________________
+
+
+
+ 1  yum install nano && systemctl stop firewalld && systemctl disable firewalld
+    2  hostname luster-oss-storage-02
+    3  hostname luster-client
+    4  hostname
+    5  vi /etc/hosts
+    6  cat/etc/hosts
+    7  cat /etc/hosts
+    8  vi /etc/selinux/config
+    9  getenforce
+   10  setenforce 0
+   11  getenforce
+   12  yum update && yum upgrade -y e2fsprogs
+   13  yum install -y lustre-tests
+   14  sudo su
+   15  lctl ping 192.168.144.198@tcp0
+   16  mkdir /mnt/lustre
+   17  mount -t lustre 192.168.144.198@tcp0:/lustrefs /mnt/lustre
+   18  cd /mnt/lustre
+   19  dd if=/dev/zero of=filename bs=2G count=1
+   20  ls -al
+   21  filename-df
+   22  du -h
+   23  ls -al | du -h
+   24  ls -al  du -h
+   25  ls -al  && du -h
+   26  du -sh filename
+   27  history
+
